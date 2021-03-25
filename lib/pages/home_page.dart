@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iu/widgets/footer_bar.dart';
-import 'package:iu/widgets/header_tabs.dart';
+import 'package:iu/pages/home/home_chat.dart';
 
 const gray = const Color(0xfff6f8fb);
 
@@ -29,43 +29,15 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: Stack(
           children: [
-            MyStatelessWidget(),
+            HomePagePages(),
             FooterBar(),
           ],
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   currentIndex: _selectedIndex,
-        //   onTap: (index) => setState(() {
-        //     _tabActive = true;
-        //     controller
-        //         .animateToPage(
-        //           index,
-        //           duration: const Duration(milliseconds: 300),
-        //           curve: Curves.easeInOut,
-        //         )
-        //         .then((value) => setState(() => _tabActive = false));
-        //     _selectedIndex = index;
-        //   }),
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.home),
-        //       label: 'Store',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.business),
-        //       label: 'Chat',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.school),
-        //       label: 'Wallet',
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
 
-  Widget MyStatelessWidget() {
+  Widget HomePagePages() {
     return PageView(
       onPageChanged: _tabActive
           ? null
@@ -84,9 +56,10 @@ class _HomePageState extends State<HomePage> {
           child: Text('First Page 1'),
           color: gray,
         ),
-        Container(child: HeaderTabs()),
-        Center(
+        Container(child: HomeChat()),
+        Container(
           child: Text('Third Page'),
+          color: gray,
         )
       ],
     );

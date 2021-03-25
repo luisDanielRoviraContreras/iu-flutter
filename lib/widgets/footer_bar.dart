@@ -22,9 +22,21 @@ class FooterBar extends StatelessWidget {
                 width: 75.0,
                 height: 75.0,
                 child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 30,
+                        offset: Offset(0, -4),
+                      ),
+                    ],
+                  ),
                   child: TextButton(
                       child: Image(image: AssetImage('assets/menu/Chat.png')),
-                      onPressed: () {},
+                      onPressed: () {
+                        print('click aqui');
+                      },
                       style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -127,8 +139,33 @@ class FooterBar extends StatelessWidget {
 }
 
 class BNBCustomPainter extends CustomPainter {
+  static double convertRadiusToSigma(double radius) {
+    return radius * 0.57735 + 0.5;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    Paint paint2 = Paint()
+      ..color = Colors.black.withOpacity(0.06)
+      ..style = PaintingStyle.fill
+      ..maskFilter =
+          MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(30));
+
+    Path path2 = Path()..moveTo(0, 0);
+    path2.quadraticBezierTo(size.width * 0.20, 0, size.width * 0.35, 0);
+    path2.quadraticBezierTo(size.width * 0.40, 0, size.width * 0.40, 20);
+    path2.arcToPoint(
+      Offset(size.width * 0.60, 25),
+      radius: Radius.elliptical(10.0, 9.0),
+      clockwise: false,
+    );
+    path2.quadraticBezierTo(size.width * 0.60, 0, size.width * 0.65, 0);
+    path2.quadraticBezierTo(size.width * 0.80, 0, size.width, 0);
+    path2.lineTo(size.width, size.height);
+    path2.lineTo(0, size.height);
+    path2.close();
+    canvas.drawPath(path2, paint2);
+
     Paint paint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
@@ -149,6 +186,7 @@ class BNBCustomPainter extends CustomPainter {
     canvas.drawPath(path, paint);
   }
 
+  //
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
